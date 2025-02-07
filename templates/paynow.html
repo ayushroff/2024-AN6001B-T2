@@ -22,10 +22,34 @@
         <script>
             const contractAddress = "0x8237dfd30e54e7840d73d6d5ee2245d0b621acd9";
             const contractABI = [
+            [
                 {
                     "inputs": [],
                     "stateMutability": "nonpayable",
                     "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "check_transaction",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
                 },
                 {
                     "inputs": [
@@ -49,30 +73,8 @@
                     "outputs": [],
                     "stateMutability": "nonpayable",
                     "type": "function"
-                },
-                {
-                    "inputs": [],
-                    "name": "transaction",
-                    "outputs": [
-                        {
-                            "internalType": "address",
-                            "name": "",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address",
-                            "name": "",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "stateMutability": "view",
-                    "type": "function"
                 }
+            ]
             ];
             const web3 = new Web3(Web3.givenProvider);
             const contract = new web3.eth.Contract(contractABI, contractAddress);
@@ -87,7 +89,7 @@
                 await contract.methods.weixin(payer, payee,amount).send({ from: accounts[0]});
             }
             async function transaction() {
-                const result = await contract.methods.transaction().call();
+                const result = await contract.methods.check_transaction().call();
                 document.getElementById('view_payer').innerText = "Payer: " + result[0];
                 document.getElementById('view_payee').innerText = "Payee: " + result[1];
                 document.getElementById('view_amount').innerText = "Amount: " + result[2];
